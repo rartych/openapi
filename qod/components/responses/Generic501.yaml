@@ -1,0 +1,9 @@
+description: Not Implemented
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 501
+      code: NOT_IMPLEMENTED
+      message: Service not implemented for the specified user device

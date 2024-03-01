@@ -1,0 +1,9 @@
+description: Not Authenticated
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 401
+      code: UNAUTHENTICATED
+      message: Request not authenticated due to missing, invalid, or expired

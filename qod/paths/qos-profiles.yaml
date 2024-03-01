@@ -1,0 +1,39 @@
+get:
+  tags:
+    - QoS Profiles
+  summary: Get All QoS Profiles
+  description: |
+    Returns all QoS Profiles that match the given criteria.
+    If no criteria is given, all QoS Profiles are returned.
+  operationId: getQosProfiles
+  parameters:
+    - name: name
+      in: query
+      description: QoS Profile name
+      schema:
+        type: string
+      required: false
+    - name: status
+      in: query
+      schema:
+        $ref: ../components/schemas/QosProfileStatusEnum.yaml
+      required: false
+  responses:
+    '200':
+      description: Contains information about QoS Profiles
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/QosProfile.yaml
+    '401':
+      $ref: ../components/responses/Generic401.yaml
+    '403':
+      $ref: ../components/responses/Generic403.yaml
+    '404':
+      $ref: ../components/responses/QosProfilesNotFound404.yaml
+    '500':
+      $ref: ../components/responses/QoSProfile500.yaml
+    '503':
+      $ref: ../components/responses/Generic503.yaml

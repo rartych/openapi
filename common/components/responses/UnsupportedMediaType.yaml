@@ -1,0 +1,11 @@
+description: Unsupported Media Type
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 415
+      code: UNSUPPORTED_MEDIA_TYPE
+      message: >-
+        The server refuses to accept the request because the payload format is
+        in an unsupported format.

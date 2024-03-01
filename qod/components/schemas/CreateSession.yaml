@@ -1,0 +1,56 @@
+description: Attributes required to create a session
+type: object
+properties:
+  duration:
+    description: >
+      Session duration in seconds. Maximal value of 24 hours is used if not set.
+
+      After session is expired the, client will receive a `QOS_STATUS_CHANGED`
+      event with
+       - `qosStatus` as `UNAVAILABLE`, and,
+       - `statusInfo` as `DURATION_EXPIRED`.
+      See notification callback.
+    type: integer
+    format: int32
+    minimum: 1
+    maximum: 86400
+    default: 86400
+    example: 86400
+  device:
+    $ref: ./Device.yaml
+  applicationServer:
+    $ref: ./ApplicationServer.yaml
+  devicePorts:
+    description: >-
+      The ports used locally by the device for flows to which the requested QoS
+      profile should apply. If omitted, then the qosProfile will apply to all
+      flows between the device and the specified application server address and
+      ports
+    allOf:
+      - $ref: ./PortsSpec.yaml
+  applicationServerPorts:
+    description: A list of single ports or port ranges on the application server
+    allOf:
+      - $ref: ./PortsSpec.yaml
+  qosProfile:
+    $ref: ./QosProfileName.yaml
+  webhook:
+    type: object
+    required:
+      - notificationUrl
+    properties:
+      notificationUrl:
+        type: string
+        format: uri
+        example: https://application-server.com
+        description: Allows asynchronous delivery of session related events
+      notificationAuthToken:
+        type: string
+        minLength: 20
+        maxLength: 256
+        example: c8974e592c2fa383d4a3960714
+        description: Authentication token for callback API
+required:
+  - device
+  - applicationServer
+  - qosProfile

@@ -1,0 +1,9 @@
+description: Out of Range
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 400
+      code: OUT_OF_RANGE
+      message: Schema validation failed at  ...

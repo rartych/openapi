@@ -1,0 +1,9 @@
+description: Method not allowed
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 405
+      code: METHOD_NOT_ALLOWED
+      message: The requested method is not allowed/supported on the target

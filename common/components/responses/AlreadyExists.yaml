@@ -1,0 +1,9 @@
+description: Already Exists
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 409
+      code: ALREADY_EXISTS
+      message: The resource that a client tried to create already exists.

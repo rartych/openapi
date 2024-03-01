@@ -1,0 +1,32 @@
+get:
+  tags:
+    - QoS Profiles
+  summary: Get QoS Profile for a given name
+  operationId: getQosProfile
+  description: |
+    Returns a QoS Profile that matches the given name.
+  parameters:
+    - name: name
+      in: path
+      required: true
+      schema:
+        $ref: ../components/schemas/QosProfileName.yaml
+  responses:
+    '200':
+      description: Contains information about QoS Profiles
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/QosProfile.yaml
+    '400':
+      $ref: ../components/responses/Generic400.yaml
+    '401':
+      $ref: ../components/responses/Generic401.yaml
+    '403':
+      $ref: ../components/responses/Generic403.yaml
+    '404':
+      $ref: ../components/responses/QosProfileNotFound404.yaml
+    '500':
+      $ref: ../components/responses/QoSProfile500.yaml
+    '503':
+      $ref: ../components/responses/Generic503.yaml

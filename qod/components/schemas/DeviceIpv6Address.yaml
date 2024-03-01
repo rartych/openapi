@@ -1,0 +1,12 @@
+description: >
+  The device should be identified by the observed IPv6 address, or by any single
+  IPv6 address from within the subnet allocated to the device (e.g. adding ::0
+  to the /64 prefix).
+
+
+  The session shall apply to all IP flows between the device subnet and the
+  specified application server, unless further restricted by the optional
+  parameters devicePorts or applicationServerPorts.
+type: string
+format: ipv6
+example: 2001:db8:85a3:8d3:1319:8a2e:370:7344

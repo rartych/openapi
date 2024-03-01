@@ -1,0 +1,11 @@
+description: Not Acceptable
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 406
+      code: NOT_ACCEPTABLE
+      message: >-
+        The server can't produce a response matching the content requested by
+        the client through Accept-* headers

@@ -1,0 +1,15 @@
+type: object
+required:
+  - message
+  - status
+  - code
+properties:
+  message:
+    type: string
+    description: A human readable description of what the event represent
+  status:
+    type: integer
+    description: HTTP response status code
+  code:
+    type: string
+    description: Friendly Code to describe the error

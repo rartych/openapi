@@ -1,0 +1,48 @@
+description: Event compliant with the CloudEvents specification
+required:
+  - id
+  - source
+  - specversion
+  - type
+  - time
+properties:
+  id:
+    description: Identifier of this event, that must be unique in the source context.
+    type: string
+  source:
+    description: >-
+      Identifies the context in which an event happened in the specific Provider
+      Implementation.
+    type: string
+    format: uri-reference
+  type:
+    description: The type of the event.
+    type: string
+    enum:
+      - org.camaraproject.qod.v0.qos-status-changed
+  specversion:
+    description: >-
+      Version of the specification to which this event conforms (must be 1.0 if
+      it conforms to cloudevents 1.0.2 version)
+    type: string
+    enum:
+      - '1.0'
+  datacontenttype:
+    description: >-
+      media-type that describes the event payload encoding, must be
+      "application/json" for CAMARA APIs
+    type: string
+    enum:
+      - application/json
+  data:
+    description: Event notification details payload, which depends on the event type
+    type: object
+  time:
+    description: |
+      Timestamp of when the occurrence happened. It must follow RFC 3339
+    type: string
+    format: date-time
+discriminator:
+  propertyName: type
+  mapping:
+    org.camaraproject.qod.v0.qos-status-changed: ./EventQosStatusChanged.yaml

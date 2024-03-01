@@ -1,0 +1,13 @@
+properties:
+  startDate:
+    type: string
+    format: date-time
+    description: An instant of time, starting of the TimePeriod.
+  endDate:
+    type: string
+    format: date-time
+    description: >-
+      An instant of time, ending of the TimePeriod. If not included, then the
+      period has no ending date.
+required:
+  - startDate

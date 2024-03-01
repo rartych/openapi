@@ -1,0 +1,9 @@
+description: Failed precondition
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 400
+      code: FAILED_PRECONDITION
+      message: Schema validation failed at  ...

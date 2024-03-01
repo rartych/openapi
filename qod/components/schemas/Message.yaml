@@ -1,0 +1,14 @@
+type: object
+properties:
+  severity:
+    description: Message severity
+    type: string
+    enum:
+      - INFO
+      - WARNING
+  description:
+    description: Detailed message text
+    type: string
+required:
+  - severity
+  - description

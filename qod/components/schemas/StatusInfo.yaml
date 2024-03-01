@@ -1,0 +1,16 @@
+description: >
+  Reason for the new `qosStatus`. Currently `statusInfo` is only applicable when
+  `qosStatus` is 'UNAVAILABLE'.
+
+  * `DURATION_EXPIRED` - Session terminated due to requested duration expired
+
+  * `NETWORK_TERMINATED` - Network terminated the session before the requested
+  duration expired
+
+  * `DELETE_REQUESTED`- User requested the deletion of the session before the
+  requested duration expired
+type: string
+enum:
+  - DURATION_EXPIRED
+  - NETWORK_TERMINATED
+  - DELETE_REQUESTED

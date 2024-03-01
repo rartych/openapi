@@ -1,0 +1,9 @@
+description: Internal Error
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 500
+      code: INTERNAL
+      message: Unknown server error.Typically a server bug.

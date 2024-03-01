@@ -1,0 +1,31 @@
+description: Session related information.
+allOf:
+  - $ref: ./CreateSession.yaml
+  - type: object
+    properties:
+      sessionId:
+        $ref: ./SessionId.yaml
+      startedAt:
+        type: integer
+        example: 1639479600
+        description: Timestamp of session start in seconds since Unix epoch
+        format: int64
+      expiresAt:
+        type: integer
+        example: 1639566000
+        description: >-
+          Timestamp of session expiration if the session was not deleted, in
+          seconds since Unix epoch
+        format: int64
+      qosStatus:
+        $ref: ./QosStatus.yaml
+      messages:
+        type: array
+        items:
+          $ref: ./Message.yaml
+    required:
+      - sessionId
+      - duration
+      - startedAt
+      - expiresAt
+      - qosStatus

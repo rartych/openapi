@@ -1,0 +1,9 @@
+description: Timeout
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 504
+      code: TIMEOUT
+      message: Request timeout exceeded

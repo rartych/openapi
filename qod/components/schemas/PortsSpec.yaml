@@ -1,0 +1,28 @@
+type: object
+minProperties: 1
+properties:
+  ranges:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required:
+        - from
+        - to
+      properties:
+        from:
+          $ref: ./Port.yaml
+        to:
+          $ref: ./Port.yaml
+  ports:
+    type: array
+    minItems: 1
+    items:
+      $ref: ./Port.yaml
+example:
+  ranges:
+    - from: 5010
+      to: 5020
+  ports:
+    - 5060
+    - 5070

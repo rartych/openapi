@@ -1,0 +1,197 @@
+post:
+  tags:
+    - QoS Sessions
+  summary: Creates a new session
+  description: >
+    Create QoS Session to manage latency/throughput priorities
+
+
+    If the qosStatus in the API response is "AVAILABLE" and a notification
+    callback is provided the client will receive in addition to the response a
+
+    `QOS_STATUS_CHANGED` event notification with `qosStatus` as `AVAILABLE`.
+
+
+    If the `qosStatus` in the API response is `REQUESTED`, the client will
+    receive either
+
+    - a `QOS_STATUS_CHANGED` event notification with `qosStatus` as `AVAILABLE`
+    after the network notifies that it has created the requested session, or
+
+    - a `QOS_STATUS_CHANGED` event notification with `qosStatus` as
+    `UNAVAILABLE` and `statusInfo` as `NETWORK_TERMINATED` after the network
+    notifies that it has failed to provide the requested session.
+
+
+    A `QOS_STATUS_CHANGED` event notification with `qosStatus` as `UNAVAILABLE`
+    will also be send if the network terminates the session before the requested
+    duration expired
+
+
+    NOTE: in case of a `QOS_STATUS_CHANGED` event with `qosStatus` as
+    `UNAVAILABLE` and `statusInfo` as `NETWORK_TERMINATED` the resources of the
+    QoS session
+
+    are not directly released, but will get deleted automatically at earliest
+    360 seconds after the event.
+
+    This behavior allows clients which are not receiving notification events but
+    are polling to get the session information with
+
+    the `qosStatus` `UNAVAILABLE` and `statusInfo` `NETWORK_TERMINATED`. Before
+    a client can attempt to create a new QoD session
+
+    for the same device and flow period they must release the session resources
+    with an explicit `delete` operation if not yet automatically deleted.
+  operationId: createSession
+  requestBody:
+    description: Parameters to create a new session
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/CreateSession.yaml
+    required: true
+  callbacks:
+    notifications:
+      '{$request.body#/webhook/notificationUrl}':
+        post:
+          tags:
+            - Session notifications callback
+          summary: Session notifications callback
+          description: >
+            Important: this endpoint is to be implemented by the API consumer.
+
+            The QoD server will call this endpoint whenever any QoS session
+            change (e.g. network termination) related event occurs.
+
+            Currently only QOS_STATUS_CHANGED event is defined.
+          operationId: postNotification
+          requestBody:
+            required: true
+            content:
+              application/cloudevents+json:
+                schema:
+                  $ref: ../components/schemas/CloudEvent.yaml
+                examples:
+                  QOS_STATUS_CHANGED_EXAMPLE:
+                    $ref: ../components/examples/QOS_STATUS_CHANGED_EXAMPLE.yaml
+          responses:
+            '204':
+              description: Successful notification
+            '400':
+              $ref: ../components/responses/Generic400.yaml
+            '401':
+              $ref: ../components/responses/Generic401.yaml
+            '403':
+              $ref: ../components/responses/Generic403.yaml
+            '500':
+              $ref: ../components/responses/Generic500.yaml
+            '503':
+              $ref: ../components/responses/Generic503.yaml
+          security:
+            - {}
+            - notificationsBearerAuth: []
+  responses:
+    '201':
+      description: Session created
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SessionInfo.yaml
+    '400':
+      description: Invalid input for createSession operation
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorInfo.yaml
+          examples:
+            Generic400:
+              summary: >-
+                Some parameter combinations or parameter values provided are not
+                schema compliant
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: Schema validation failed at  ...
+            DeviceMissing:
+              summary: Device must be specified
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: 'Expected property is missing: device'
+            InsufficientDeviceProperties:
+              summary: Device must be identified by at least one parameter
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: 'Insufficient properties specified: device'
+            InconsistentDeviceProperties:
+              summary: Device parameters provided identify different devices
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: 'Multiple inconsistent parameters specified: device'
+            CannotIdentifyDevice:
+              summary: No device can be identified from provided parameters
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: 'Unable to identify device from specified parameters: device'
+            InvalidDevicePublicPortValue:
+              summary: Invalid port specified for device public port
+              value:
+                status: 400
+                code: OUT_OF_RANGE
+                message: 'Invalid port value specified: device.ipv4Address.publicPort'
+            ApplicationServerMissing:
+              summary: Application server must be specified
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: 'Expected property is missing: applicationServer'
+            QoSProfileMissing:
+              summary: Required QoS profile must be specified
+              value:
+                status: 400
+                code: INVALID_ARGUMENT
+                message: 'Expected property is missing: qosProfile'
+            InvalidDevicePortsRanges:
+              summary: Invalid port ranges specified for devicePorts
+              value:
+                status: 400
+                code: OUT_OF_RANGE
+                message: 'Invalid port ranges specified: devicePorts'
+            DurationOutOfRangeForQoSProfile:
+              summary: >-
+                The requested duration is out of the allowed range for the
+                specific QoS profile
+              value:
+                status: 400
+                code: OUT_OF_RANGE
+                message: >-
+                  The requested duration is out of the allowed range for the
+                  specific QoS profile
+    '401':
+      $ref: ../components/responses/Generic401.yaml
+    '403':
+      $ref: ../components/responses/Generic403.yaml
+    '409':
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/ErrorInfo.yaml
+          example:
+            status: 409
+            code: CONFLICT
+            message: Another session is created for the same device
+    '500':
+      $ref: ../components/responses/Generic500.yaml
+    '501':
+      $ref: ../components/responses/Generic501.yaml
+    '503':
+      $ref: ../components/responses/Generic503.yaml
+  security:
+    - oAuth2ClientCredentials: []
+    - threeLegged:
+        - qod-sessions-write

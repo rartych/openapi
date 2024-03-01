@@ -1,0 +1,81 @@
+get:
+  tags:
+    - QoS Sessions
+  summary: Get QoS session information
+  description: Querying for QoS session resource information details
+  operationId: getSession
+  parameters:
+    - name: sessionId
+      in: path
+      description: Session ID that was obtained from the createSession operation
+      required: true
+      schema:
+        $ref: ../components/schemas/SessionId.yaml
+  responses:
+    '200':
+      description: Contains information about active session
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/SessionInfo.yaml
+    '400':
+      $ref: ../components/responses/Generic400.yaml
+    '401':
+      $ref: ../components/responses/Generic401.yaml
+    '403':
+      $ref: ../components/responses/Generic403.yaml
+    '404':
+      $ref: ../components/responses/SessionNotFound404.yaml
+    '500':
+      $ref: ../components/responses/Generic500.yaml
+    '503':
+      $ref: ../components/responses/Generic503.yaml
+  security:
+    - oAuth2ClientCredentials: []
+    - threeLegged:
+        - qod-sessions-read
+delete:
+  tags:
+    - QoS Sessions
+  summary: Delete a QoS session
+  description: >
+    Release resources related to QoS session
+
+
+    If the notification callback is provided and the `qosStatus` of the session
+    was `AVAILABLE` the client will receive in addition to the response a
+    `QOS_STATUS_CHANGED` event with
+
+    - `qosStatus` as `UNAVAILABLE` and
+
+    - `statusInfo` as `DELETE_REQUESTED`
+
+    There will be no notification event if the `qosStatus` was already
+    `UNAVAILABLE`.
+  operationId: deleteSession
+  parameters:
+    - name: sessionId
+      in: path
+      description: Session ID that was obtained from the createSession operation
+      required: true
+      schema:
+        $ref: ../components/schemas/SessionId.yaml
+  responses:
+    '204':
+      description: Session deleted
+    '400':
+      $ref: ../components/responses/Generic400.yaml
+    '401':
+      $ref: ../components/responses/Generic401.yaml
+    '403':
+      $ref: ../components/responses/Generic403.yaml
+    '404':
+      $ref: ../components/responses/SessionNotFound404.yaml
+    '500':
+      $ref: ../components/responses/Generic500.yaml
+    '503':
+      $ref: ../components/responses/Generic503.yaml
+  security:
+    - oAuth2ClientCredentials: []
+    - threeLegged:
+        - qod-sessions-delete

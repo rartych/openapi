@@ -1,0 +1,9 @@
+type: string
+enum:
+  - Days
+  - Hours
+  - Minutes
+  - Seconds
+  - Milliseconds
+  - Microseconds
+  - Nanoseconds

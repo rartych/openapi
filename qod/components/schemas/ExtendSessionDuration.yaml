@@ -1,0 +1,13 @@
+description: Attributes required to extend the duration of an active session
+type: object
+properties:
+  requestedAdditionalDuration:
+    description: |
+      Additional duration in seconds to be extended.
+    type: integer
+    format: int32
+    minimum: 1
+    maximum: 86399
+    example: 60
+required:
+  - requestedAdditionalDuration

@@ -1,0 +1,9 @@
+description: Permission denied
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 403
+      code: PERMISSION_DENIED
+      message: Client does not have sufficient permissions to perform

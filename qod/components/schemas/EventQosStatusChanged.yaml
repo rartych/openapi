@@ -1,0 +1,19 @@
+allOf:
+  - $ref: ./CloudEvent.yaml
+  - type: object
+    properties:
+      data:
+        type: object
+        description: Event details depending on the event type
+        required:
+          - sessionId
+          - qosStatus
+        properties:
+          sessionId:
+            $ref: ./SessionId.yaml
+          qosStatus:
+            $ref: ./EventQosStatus.yaml
+          statusInfo:
+            $ref: ./StatusInfo.yaml
+    required:
+      - data

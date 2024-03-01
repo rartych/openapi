@@ -1,0 +1,9 @@
+description: Authentication Required
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 401
+      code: AUTHENTICATION_REQUIRED
+      message: New authentication is required

@@ -1,0 +1,226 @@
+description: |
+  Data type with attributes of a QosProfile
+type: object
+properties:
+  name:
+    $ref: ./QosProfileName.yaml
+  description:
+    description: |
+      A description of the QoS profile.
+    type: string
+    example: QoS profile for video streaming
+  status:
+    $ref: ./QosProfileStatusEnum.yaml
+  targetMinUpstreamRate:
+    description: >
+      This is the target minimum upstream rate for the QoS profile.
+
+      For 5G networks 3GPP Guaranteed Bit Rate (GBR) refers to a dedicated,
+      fixed data rate assigned to
+
+      specific services, ensuring a minimum performance level. As per 3GPP TS
+      23.203,
+
+      GBR is a QoS parameter used to manage traffic classes in mobile networks.
+      It
+
+      provides a stable data rate for latency-sensitive applications, such as
+      voice calls or
+
+      video streaming, helping maintain a consistent user experience. When this
+      attribute is set
+
+      this could imply that a GBR QCI is used, though mechanisms on the network
+      can be used to
+
+      ensure a minimum performance level without using a GBR QCI.
+
+      The committed data rate allocated to specific services, ensuring a
+      consistent level of
+
+      performance. For DOCSIS networks, the "Minimum Reserved Traffic Rate" is
+      defined in the
+
+      DOCSIS 3.1 - MAC and Upper Layer Protocols Interface Specification"
+
+      and it ensures a consistent level of performance for specific services
+      within the network.
+    allOf:
+      - $ref: ./Rate.yaml
+  maxUpstreamRate:
+    description: |
+      The maximum best effort data
+    allOf:
+      - $ref: ./Rate.yaml
+  maxUpstreamBurstRate:
+    description: >
+      When defined, this is the maximum upstream burst rate for the QoS profile,
+      that will enable
+
+      the network to burst data at a higher rate than the maxUpstreamRate for a
+      period of time.
+    allOf:
+      - $ref: ./Rate.yaml
+  targetMinDownstreamRate:
+    description: >
+      This is the target minimum downstream rate for the QoS profile.
+
+      For 5G networks 3GPP Guaranteed Bit Rate (GBR) refers to a dedicated,
+      fixed data rate assigned to
+
+      specific services, ensuring a minimum performance level. As per 3GPP TS
+      23.203,
+
+      GBR is a QoS parameter used to manage traffic classes in mobile networks.
+      It
+
+      provides a stable data rate for latency-sensitive applications, such as
+      voice calls or
+
+      video streaming, helping maintain a consistent user experience.  When this
+      attribute is set
+
+      this could imply that a GBR QCI is used, though mechanisms on the network
+      can be used to
+
+      ensure a minimum performance level without using a GBR QCI.
+
+      The committed data rate allocated to specific services, ensuring a
+      consistent level of
+
+      performance. DOCSIS networks, the "Minimum Reserved Traffic Rate" is
+      defined in the
+
+      DOCSIS 3.1 - MAC and Upper Layer Protocols Interface Specification"
+
+      and it ensures a consistent level of performance for specific services
+      within the network.
+    allOf:
+      - $ref: ./Rate.yaml
+  maxDownstreamRate:
+    description: |
+      The maximum best effort rate
+    allOf:
+      - $ref: ./Rate.yaml
+  maxDownstreamBurstRate:
+    description: >
+      When defined, this is the maximum downstream burst rate for the QoS
+      profile, that will enable
+
+      the network to burst data at a higher rate than the maxDownstreamRate for
+      a period of time.
+
+      This can result in improved user experience when there is additional
+      network capacity.
+
+      For instance, when a user is streaming a video, the network can burst data
+      at a higher rate
+
+      to fill the buffer, and then return to the maxUpstreamRate once the buffer
+      is full.
+    allOf:
+      - $ref: ./Rate.yaml
+  minDuration:
+    description: |
+      The shortest time period that this profile can be deployed.
+    allOf:
+      - $ref: ./Duration.yaml
+  maxDuration:
+    description: >
+      The maximum time period that this profile can be deployed.
+
+      NOTE: currently the duration within `sessionInfo` is limited to 86400
+      seconds (1 day).
+
+      The value of `maxDuration` shouldn't therefore exceed this time period.
+      The limitation might be removed in later versions.
+    allOf:
+      - $ref: ./Duration.yaml
+  priority:
+    type: integer
+    example: 20
+    description: >
+      Priority levels allow efficient resource allocation and ensure optimal
+      performance
+
+      for various services in each technology, with the highest priority traffic
+      receiving
+
+      preferential treatment.
+
+      The lower value the higher priority.
+
+      Not all access networks use the same priority range, so this priority will
+      be
+
+      scaled to the access network's priority range.
+    format: int32
+    minimum: 1
+    maximum: 100
+  packetDelayBudget:
+    description: >
+      The packet delay budget is the maximum allowable one-way latency between
+      the customer's device
+
+      and the gateway from the operator's network to other networks. By limiting
+      the delay, the network
+
+      can provide an acceptable level of performance for various services, such
+      as voice calls,
+
+      video streaming, and data.
+
+      The end-to-end or round trip latency will be about two times this value
+      plus the latency not controlled
+
+      by the operator
+    allOf:
+      - $ref: ./Duration.yaml
+  jitter:
+    description: |
+      The jitter requirement aims to limit the maximum variation in round-trip
+      packet delay for the 99th percentile of traffic, following ITU Y.1540
+      standards. It considers only acknowledged packets in a session, which are
+      packets that receive a confirmation of receipt from the recipient (e.g.,
+      using TCP). This requirement helps maintain consistent latency, essential
+      for real-time applications such as VoIP, video calls, and gaming.
+    allOf:
+      - $ref: ./Duration.yaml
+  packetErrorLossRate:
+    type: integer
+    description: >
+      The exponential power of the allowable error loss rate 10^(-N).
+
+      For instance 3 would be an error loss rate of 10 to the power of -3
+      (0.001)
+
+
+      For 5G network the 3GPP specification TS 23.203 defines the packet error
+      loss rate QCI attribute. It
+
+      describes the Quality of Service (QoS) Class Identifier (QCI) parameters
+      used to
+
+      differentiate traffic classes in mobile networks, ensuring appropriate
+      resource
+
+      allocation and performance for various services.
+
+
+      The packet error loss rate is one of the QCI attributes, providing
+      information on the
+
+      acceptable packet loss rate for a specific traffic class. This attribute
+      helps maintain
+
+      the desired performance level for services like voice calls, video
+      streaming, or data
+
+      transfers within the 3GPP mobile network.
+    format: int32
+    minimum: 1
+    maximum: 10
+    example: 3
+required:
+  - name
+  - status

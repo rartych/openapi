@@ -1,0 +1,9 @@
+description: Internal server error
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 500
+      code: INTERNAL
+      message: 'Internal server error: Could not get QoS Profile'

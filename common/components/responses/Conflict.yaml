@@ -1,0 +1,9 @@
+description: conflict
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 409
+      code: CONFLICT
+      message: Schema validation failed at  ...

@@ -1,0 +1,9 @@
+description: Already Exists
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 429
+      code: TOO_MANY_REQUESTS
+      message: Either out of resource quota or reaching rate limiting.

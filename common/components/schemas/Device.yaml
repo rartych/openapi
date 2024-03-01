@@ -1,0 +1,20 @@
+description: >
+  End-user equipment able to connect to a mobile network. Examples of devices
+  include smartphones or IoT sensors/actuators.
+      The developer can choose to provide the below specified device identifiers:
+      * `ipv4Address`
+      * `ipv6Address`
+      * `phoneNumber`
+      * `networkAccessIdentifier`
+      NOTE: the MNO might support only a subset of these options. The API invoker can provide multiple identifiers to be compatible across different MNOs. In this case the identifiers MUST belong to the same device.
+type: object
+properties:
+  phoneNumber:
+    $ref: ./PhoneNumber.yaml
+  networkAccessIdentifier:
+    $ref: ./NetworkAccessIdentifier.yaml
+  ipv4Address:
+    $ref: ./DeviceIpv4Addr.yaml
+  ipv6Address:
+    $ref: ./DeviceIpv6Address.yaml
+minProperties: 1

@@ -1,0 +1,9 @@
+description: Bad Gateway
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 502
+      code: BAD_GATEWAY
+      message: Couldn't reach an upstream internal service.

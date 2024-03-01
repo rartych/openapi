@@ -1,0 +1,4 @@
+description: A single IPv4 address with no subnet mask
+type: string
+format: ipv4
+example: 84.125.93.10

@@ -1,0 +1,7 @@
+type: string
+enum:
+  - bps
+  - kbps
+  - Mbps
+  - Gbps
+  - Tbps

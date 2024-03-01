@@ -1,0 +1,9 @@
+description: Not Implemented
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 501
+      code: NOT_IMPLEMENTED
+      message: This functionality is not implemented yet

@@ -1,0 +1,11 @@
+type: object
+properties:
+  value:
+    type: integer
+    example: 12
+    format: int32
+    minimum: 1
+  unit:
+    allOf:
+      - $ref: ./TimeUnitEnum.yaml
+      - example: Minutes

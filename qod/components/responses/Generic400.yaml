@@ -1,0 +1,9 @@
+description: Invalid input
+content:
+  application/json:
+    schema:
+      $ref: ../schemas/ErrorInfo.yaml
+    example:
+      status: 400
+      code: INVALID_ARGUMENT
+      message: Schema validation failed at  ...

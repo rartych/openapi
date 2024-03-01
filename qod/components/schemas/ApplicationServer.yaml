@@ -1,0 +1,18 @@
+description: >
+  A server hosting backend applications to deliver some business logic to
+  clients.
+
+
+  The developer can choose to provide the below specified device identifiers:
+
+
+  * `ipv4Address`
+
+  * `ipv6Address`
+type: object
+properties:
+  ipv4Address:
+    $ref: ./ApplicationServerIpv4Address.yaml
+  ipv6Address:
+    $ref: ./ApplicationServerIpv6Address.yaml
+minProperties: 1
