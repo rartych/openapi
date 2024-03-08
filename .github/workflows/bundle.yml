@@ -31,3 +31,8 @@ jobs:
         uses: fluximus-prime/redocly-cli-github-action@v1
         with:
           args: 'bundle qod/openapi.yaml --output qod/bundled.yaml'
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundled OAS
+          path: qod/bundled.yaml
